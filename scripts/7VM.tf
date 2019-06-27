@@ -19,14 +19,26 @@ managed_disk_type = "Standard_LRS"
 
 os_profile {
 computer_name = "jenkinsVM"
-admin_username = "admin123"
-admin_password = "Password123456789!"
+admin_username = "al"
 }
 os_profile_linux_config {
-disable_password_authentication = false
+disable_password_authentication = true
+ssh_keys {
+path = "/home/al/.ssh/authorized_keys"
+key_data = "${file("/home/al/.ssh/id_rsa.pub")}"
+}
 }
 tags = {
 environment = "staging"
+}
+provisioner "remote-exec" {
+inline = ["sudo apt update", "sudo apt install -y jq", "sudo apt install git", "git clone https://github.com/AChar95/JenkinsScript.git", "cd JenkinsScript/run.sh"]
+connection {
+type	= "ssh"
+user	= "al"
+private_key ="$file("/home/al/.ssh/id_rsa")"
+host = "${azurerm_public_ip.main.fqdn}"
+}
 }
 }
 

@@ -8,5 +8,7 @@ resource "azurerm_network_interface" "main" {
 		name		 		= "${var.prefix}-ip"
 		subnet_id			= "${azurerm_subnet.vmSubnet.id}"
 		private_ip_address_allocation	= "Dynamic"
+		public_ip_address_id		= "${azurerm_public_ip.main.id}"
 	}
+depends_on = [azurerm_network_security_group.main, azurerm_subnet.vmSubnet, azurerm_public_ip.main]
 }
