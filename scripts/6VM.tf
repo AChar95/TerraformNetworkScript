@@ -2,7 +2,7 @@ resource "azurerm_virtual_machine" "main" {
 name			= "${var.prefix}-vm1"
 location 		= "${azurerm_resource_group.main.location}"
 resource_group_name	= "${azurerm_resource_group.main.name}"
-network_interface_id 	= ["${azurerm_network_interface.main.id}"]
+network_interface_ids 	= ["${azurerm_network_interface.main.id}"]
 vm_size			= "Standard_DS1_v2"
 storage_image_reference {
 publisher = "Canonical"
@@ -14,7 +14,7 @@ storage_os_disk {
 name = "myosdisk1"
 caching = "ReadWrite"
 create_option = "FromImage"
-manage_disk_type = "Stanadard_LRS"
+managed_disk_type = "Standard_LRS"
 }
 
 os_profile {
